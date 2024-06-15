@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static Website</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css">
+
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8;
+    }
+
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: #fff;
+            border-bottom: 2px solid #ccc;
+        }
+
+        header .logo img {
+            max-width: 150px;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        header nav ul li {
+            margin-left: 20px;
+        }
+
+        header nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .search-bar {
+            position: relative;
+            max-width: 300px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 16px;
+        }
+
+        .banner {
+            display: flex;
+            gap: 1rem;
+            padding: 2rem 5%;
+        }
+
+        .banner-image {
+            flex: 3;
+        }
+
+        .banner-image img {
+            width: 100%;
+            height: -webkit-fill-available;
+            object-fit: cover;
+        }
+
+        .banner-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .banner-right img {
+            width: 100%;
+            height: calc(50% - 0.5rem);
+            object-fit: cover;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: space-around;
+            padding: 2rem 5%;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .category {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1 1 calc(20% - 1rem);
+        }
+
+        .category img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .category h3 {
+            margin: 1rem 0 0.5rem;
+            font-size: 14px;
+            font-style: capitalize;
+        }
+
+        .category button {
+            margin-top: 16px;
+            padding: 0.5rem 2rem;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .category button:hover {
+            background-color: #0056b3;
+        }
+
+        .carousel {
+            
+            max-width: 1200px;
+            text-align: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: auto;
+            margin-bottom: 40px;
+            background: lightgray;
+            padding: 20px auto;
+        }
+
+        .carousel h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .carousel-container {
+            max-width: 1000px;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: auto;
+        }
+
+        .glide__slides {
+            display: flex;
+            width: 90%;
+            margin: auto;
+            justify-content: space-between;
+            padding-bottom: 50px;
+        }
+
+        .glide__slide {
+            box-sizing: border-box;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid lightgray;
+            box-shadow: 0.5px 0.5px 0.5px lightgray;
+            text-align: center;
+            height: max-content;
+        }
+
+        .glide__slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
+        .glide__slide .price {
+            font-size: 14px;
+            font-weight: bold;
+            color: #007bff;
+            margin: 5px 0;
+        }
+
+        .glide__slide .description {
+            font-size: 14px;
+            color: #333;
+            margin: 0;
+            margin-top: 10px;
+        }
+
+        
+        .glide__arrows {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .glide__arrow {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .glide__bullets {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+        }
+
+        .glide__bullet {
+            width: 12px;
+            height: 12px;
+            background-color: #ddd;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .glide__bullet--active {
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#">
+                <img src="http://via.placeholder.com/150x50" alt="Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Body Jewelry</a></li>
+                <li><a href="#">Piercing</a></li>
+                <li><a href="#">Tattoo</a></li>
+                <li><a href="#">Medical</a></li>
+                <li><a href="#">Studio</a></li>
+                <li><a href="#">Permanent Makeup</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <input type="text" placeholder="Search by name, category...">
+        </div>
+    </header>
+
+    <main>
+        <section class="banner">
+            <div class="banner-image">
+                <img src="http://via.placeholder.com/2550x550" alt="Banner">
+            </div>
+            <div class="banner-right">
+                <img src="http://via.placeholder.com/400x300" alt="Product 1">
+                <img src="http://via.placeholder.com/400x300" alt="Product 2">
+            </div>
+        </section>
+
+        <section class="categories">
+            <div class="category">
+                <h3>Tattoo Supplies</h3>
+                <img src="http://via.placeholder.com/100x100" alt="Tattoo Supplies">
+                <button>Shop now</button>
+            </div>
+            <div class="category">
+                <h3>Body Jewelry</h3>
+                <img src="http://via.placeholder.com/100x100" alt="Body Jewelry">
+                <button>Shop now</button>
+            </div>
+            <div class="category">
+                <h3>Piercing Supplies</h3>
+                <img src="http://via.placeholder.com/100x100" alt="Piercing Supplies">
+                <button>Shop now</button>
+            </div>
+            <div class="category">
+                <h3>Medical Supplies</h3>
+                <img src="http://via.placeholder.com/100x100" alt="Medical Supplies">
+                <button>Shop now</button>
+            </div>
+            <div class="category">
+                <h3>Permanent Makeup</h3>
+                <img src="http://via.placeholder.com/100x100" alt="Permanent Makeup">
+                <button>Shop now</button>
+            </div>
+        </section>
+
+        <section class="carousel">
+            <h2>New Products</h2>
+            <div class="carousel-container">
+                <div class="glide" id="glide">
+                    <div class="glide__track" data-glide-el="track">
+                        <div class="glide__slides">
+                            <div class="glide__slide">
+                                <img src="http://via.placeholder.com/300x150" alt="New Product 1">
+                                <p class="price">$449.99</p>
+                                <p class="description">Rook Quill Rotary Tattoo Machine — Copper</p>
+                            </div>
+                            <div class="glide__slide">
+                                <img src="http://via.placeholder.com/300x150" alt="New Product 2">
+                                <p class="price">$449.99</p>
+                                <p class="description">Rook Quill Rotary Tattoo Machine — Blue</p>
+                            </div>
+                            <div class="glide__slide">
+                                <img src="http://via.placeholder.com/300x150" alt="New Product 3">
+                                <p class="price">$1,199.99</p>
+                                <p class="description">Pre-Order — Inkjecta Flite X1 Wireless Tattoo Machine</p>
+                            </div>
+                            <div class="glide__slide">
+                                <img src="http://via.placeholder.com/300x150" alt="New Product 4">
+                                <p class="price">$1,199.99</p>
+                                <p class="description">Pre-Order — Inkjecta Flite X1 Wireless w/ The Machine</p>
+                            </div>
+                            <div class="glide__slide">
+                                <img src="http://via.placeholder.com/300x150" alt="New Product 5">
+                                <p class="price">$1,199.99</p>
+                                <p class="description">Pre-Order — Inkjecta Flite X1 Wireless Tattoo Gun</p>
+                            </div>
+                            <div class="glide__slide">
+                                <img src="http://via.placeholder.com/300x150" alt="New Product 3">
+                                <p class="price">$1,199.99</p>
+                                <p class="description">Pre-Order — Inkjecta Flite X1 Wireless Tattoo Machine</p>
+                            </div>
+                            <div class="glide__slide">
+                                <img src="http://via.placeholder.com/300x150" alt="New Product 4">
+                                <p class="price">$1,199.99</p>
+                                <p class="description">Pre-Order — Inkjecta Flite X1 Wireless w/ The Machine</p>
+                            </div>
+                            <div class="glide__slide">
+                                <img src="http://via.placeholder.com/300x150" alt="New Product 5">
+                                <p class="price">$1,199.99</p>
+                                <p class="description">Pre-Order — Inkjecta Flite X1 Wireless Tattoo Gun</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glide__arrows" data-glide-el="controls">
+                        <button class="glide__arrow glide__arrow--left" data-glide-dir="<">&#10094;</button>
+                        <button class="glide__arrow glide__arrow--right" data-glide-dir=">">&#10095;</button>
+                    </div>
+                    <div class="glide__bullets" data-glide-el="controls[nav]">
+                        <button class="glide__bullet" data-glide-dir="=0"></button>
+                        <button class="glide__bullet" data-glide-dir="=1"></button>
+                        <button class="glide__bullet" data-glide-dir="=2"></button>
+                        <button class="glide__bullet" data-glide-dir="=3"></button>
+                        <button class="glide__bullet" data-glide-dir="=4"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            new Glide('.glide', {
+                type: 'carousel',
+                perView: 4,
+                breakpoints: {
+                    1200: {
+                        perView: 3
+                    },
+                    800: {
+                        perView: 2
+                    },
+                    480: {
+                        perView: 1
+                    }
+                }
+            }).mount();
+        });
+    </script>
+</body>
+</html>
